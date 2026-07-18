@@ -31,7 +31,6 @@
   }
   a{color:inherit;text-decoration:none;}
 
-  /* ---------- Screentone texture ---------- */
   .tone{
     background-image:radial-gradient(var(--paper-dim) 1px, transparent 1.4px);
     background-size:7px 7px;
@@ -41,7 +40,6 @@
     pointer-events:none;
   }
 
-  /* ---------- Header ---------- */
   header{
     position:sticky;top:0;z-index:50;
     background:var(--ink);
@@ -65,7 +63,6 @@
     flex-shrink:0;
   }
 
-  /* ---------- Hero ---------- */
   .hero{
     position:relative;
     padding:56px 20px 44px;
@@ -105,7 +102,6 @@
   .btn-solid{background:var(--paper);color:var(--ink);}
   .btn-outline{background:transparent;color:var(--paper);}
 
-  /* ---------- Section shell ---------- */
   section{padding:34px 18px;}
   .section-head{
     display:flex;align-items:baseline;justify-content:space-between;
@@ -119,7 +115,6 @@
   }
   .see-all{font-size:0.75rem;font-weight:600;color:var(--paper-dim);}
 
-  /* ---------- Panel grid (signature) ---------- */
   .panel-grid{
     display:grid;
     grid-template-columns:repeat(2,1fr);
@@ -158,7 +153,13 @@
     margin-top:3px;display:flex;gap:8px;
   }
 
-  /* ---------- Genre chips ---------- */
+  .card img.cover{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;z-index:0;
+  }
+  .card .card-info{position:relative;z-index:2;}
+  .card .tone{z-index:1;}
+
   .chips{display:flex;gap:8px;flex-wrap:wrap;}
   .chip{
     border:2px solid var(--paper-dim);
@@ -167,7 +168,41 @@
   }
   .chip.active{background:var(--red);border-color:var(--red);color:var(--paper);}
 
-  /* ---------- Horizontal scroller ---------- */
+  .genre-jump{
+    display:flex;gap:8px;overflow-x:auto;
+    padding-bottom:4px;margin-bottom:8px;
+    scrollbar-width:none;
+  }
+  .genre-jump::-webkit-scrollbar{display:none;}
+  .genre-jump a{
+    flex:0 0 auto;
+    border:2px solid var(--paper-dim);
+    padding:7px 13px;font-size:0.75rem;font-weight:700;
+    color:var(--paper-dim);
+    display:flex;align-items:center;gap:6px;
+  }
+  .genre-jump a .dot{width:8px;height:8px;background:var(--gc,var(--red));flex-shrink:0;}
+  .genre-jump a:hover{color:var(--paper);border-color:var(--paper);}
+
+  .genre-block{margin-top:30px;scroll-margin-top:70px;}
+  .genre-block:first-of-type{margin-top:22px;}
+  .genre-block-head{
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:12px;
+  }
+  .genre-block-head .dot{
+    width:14px;height:14px;background:var(--gc,var(--red));
+    transform:rotate(45deg);flex-shrink:0;
+  }
+  .genre-block-head h3{
+    font-family:'Anton',sans-serif;
+    font-size:1.05rem;letter-spacing:0.5px;
+  }
+  .genre-block-head .count{
+    font-size:0.68rem;color:var(--paper-dim);font-weight:600;
+    margin-left:auto;
+  }
+
   .hscroll{
     display:flex;gap:var(--gutter);overflow-x:auto;
     padding-bottom:6px;
@@ -176,7 +211,6 @@
   .hscroll::-webkit-scrollbar{display:none;}
   .hscroll .card{min-width:130px;flex:0 0 auto;aspect-ratio:3/4.4;}
 
-  /* ---------- Footer ---------- */
   footer{
     padding:30px 18px 40px;
     border-top:4px solid var(--paper);
@@ -185,7 +219,6 @@
   footer .logo{justify-content:center;margin-bottom:10px;}
   footer p{font-size:0.72rem;color:var(--paper-dim);}
 
-  /* ---------- Responsive ---------- */
   @media(min-width:640px){
     .hero h1{font-size:3.6rem;max-width:14ch;}
     .panel-grid{grid-template-columns:repeat(4,1fr);}
@@ -197,20 +230,19 @@
 <header>
   <div class="logo">頁<span>|</span>ХУУДАС</div>
   <nav>
-    <a href="#trending">Нүүр</a>
-    <a href="#trending">Манга</a>
-    <a href="#new">Webtoon</a>
+    <a href="#top">Нүүр</a>
+    <a href="#gharaltuud">Гаралтууд</a>
   </nav>
   <div class="search-btn">⌕</div>
 </header>
 
-<section class="hero">
+<section class="hero" id="top">
   <div class="eyebrow">● одоо унших боломжтой</div>
   <h1>ӨДӨР БҮР<br>ШИНЭ АНГИ</h1>
   <p>Дуртай манга, webtoon-оо нэг дороос уншаарай. Шинэ ангиуд өдөр бүр нэмэгдэнэ, dogo unshihgүй үлдэхгүй.</p>
   <div class="cta-row">
     <a class="btn btn-solid" href="#trending">Унших эхлэх</a>
-    <a class="btn btn-outline" href="#new">Шинэ ангиуд</a>
+    <a class="btn btn-outline" href="#gharaltuud">Гаралтууд</a>
   </div>
 </section>
 
@@ -220,92 +252,195 @@
     <span class="tag">7 ХОНОГИЙН ТОП</span>
   </div>
   <div class="panel-grid">
-    <div class="card" style="--c1:#7a1f2b;">
+    <div class="card" style="--c1:#1a1a2e;">
+      <img class="cover" src="images/solo-leveling.jpg" alt="Solo Leveling">
       <div class="tone"></div>
       <div class="card-badge">#1</div>
       <div class="card-info">
-        <div class="title">СҮНСНИЙ ЗАМ</div>
-        <div class="meta"><span>Англи 214</span><span>Action</span></div>
+        <div class="title">SOLO LEVELING</div>
+        <div class="meta"><span>Анги 214</span><span>Fantasy</span></div>
       </div>
     </div>
-    <div class="card" style="--c1:#233d5c;">
+    <div class="card" style="--c1:#111;">
+      <img class="cover" src="images/windbreaker.jpg" alt="Windbreaker">
       <div class="tone"></div>
       <div class="card-badge">#2</div>
       <div class="card-info">
-        <div class="title">ЦАГААН ХААНЫ ТУУЖ</div>
-        <div class="meta"><span>Англи 89</span><span>Fantasy</span></div>
+        <div class="title">WINDBREAKER</div>
+        <div class="meta"><span>Анги 89</span><span>Action</span></div>
       </div>
     </div>
-    <div class="card" style="--c1:#4a3a63;">
+    <div class="card" style="--c1:#0d1a3c;">
+      <img class="cover" src="images/lookism.jpg" alt="Lookism">
       <div class="tone"></div>
       <div class="card-badge">#3</div>
       <div class="card-info">
-        <div class="title">ХАРАНХУЙ ОРДОН</div>
-        <div class="meta"><span>Англи 156</span><span>Romance</span></div>
+        <div class="title">LOOKISM</div>
+        <div class="meta"><span>Анги 156</span><span>Action</span></div>
       </div>
     </div>
-    <div class="card" style="--c1:#3c5c2c;">
+    <div class="card" style="--c1:#5c1414;">
+      <img class="cover" src="images/viral-hit.jpg" alt="Viral Hit">
       <div class="tone"></div>
       <div class="card-badge">#4</div>
       <div class="card-info">
-        <div class="title">ГАЛТ САРНАЙ</div>
-        <div class="meta"><span>Англи 40</span><span>Drama</span></div>
+        <div class="title">VIRAL HIT</div>
+        <div class="meta"><span>Анги 40</span><span>Action</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<section>
+<section id="gharaltuud">
   <div class="section-head">
-    <h2>Төрөл</h2>
+    <h2>Гаралтууд</h2>
+    <span class="tag">СЭДВЭЭР</span>
   </div>
-  <div class="chips">
-    <a class="chip active" href="#">Бүгд</a>
-    <a class="chip" href="#">Action</a>
-    <a class="chip" href="#">Romance</a>
-    <a class="chip" href="#">Fantasy</a>
-    <a class="chip" href="#">Horror</a>
-    <a class="chip" href="#">Comedy</a>
-    <a class="chip" href="#">Drama</a>
-  </div>
-</section>
 
-<section id="new">
-  <div class="section-head">
-    <h2>Шинээр нэмэгдсэн</h2>
-    <span class="see-all">бүгдийг харах →</span>
+  <div class="genre-jump">
+    <a href="#genre-action" style="--gc:#E8384F;"><span class="dot"></span>Action</a>
+    <a href="#genre-adventure" style="--gc:#F4C430;"><span class="dot"></span>Adventure</a>
+    <a href="#genre-romance" style="--gc:#e05c9a;"><span class="dot"></span>Romance</a>
+    <a href="#genre-fantasy" style="--gc:#8a5cf6;"><span class="dot"></span>Fantasy</a>
+    <a href="#genre-comedy" style="--gc:#4caf50;"><span class="dot"></span>Comedy</a>
+    <a href="#genre-horror" style="--gc:#8a8a8a;"><span class="dot"></span>Horror</a>
+    <a href="#genre-drama" style="--gc:#3a7bd5;"><span class="dot"></span>Drama</a>
   </div>
-  <div class="hscroll">
-    <div class="card" style="--c1:#8a4b1f;">
-      <div class="tone"></div>
-      <div class="card-badge new">NEW</div>
-      <div class="card-info">
-        <div class="title">ШӨНИЙН ЗЭРЭГЦЭЭ</div>
-        <div class="meta"><span>Анги 1</span></div>
+
+  <div class="genre-block" id="genre-action" style="--gc:#E8384F;">
+    <div class="genre-block-head">
+      <span class="dot"></span><h3>Action</h3><span class="count">24 гарчиг</span>
+    </div>
+    <div class="hscroll">
+      <div class="card" style="--c1:#7a1f2b;">
+        <div class="tone"></div>
+        <div class="card-badge">#1</div>
+        <div class="card-info"><div class="title">СҮНСНИЙ ЗАМ</div><div class="meta"><span>Анги 214</span></div></div>
+      </div>
+      <div class="card" style="--c1:#8a4b1f;">
+        <div class="tone"></div>
+        <div class="card-badge new">NEW</div>
+        <div class="card-info"><div class="title">ШӨНИЙН ЗЭРЭГЦЭЭ</div><div class="meta"><span>Анги 1</span></div></div>
+      </div>
+      <div class="card" style="--c1:#1f3a6b;">
+        <div class="tone"></div>
+        <div class="card-info"><div class="title">ТЭМЦЭГЧИЙН ТАМГА</div><div class="meta"><span>Анги 67</span></div></div>
       </div>
     </div>
-    <div class="card" style="--c1:#1f6b6b;">
-      <div class="tone"></div>
-      <div class="card-badge new">NEW</div>
-      <div class="card-info">
-        <div class="title">МУНХАГ БАТАР</div>
-        <div class="meta"><span>Анги 3</span></div>
+  </div>
+
+  <div class="genre-block" id="genre-adventure" style="--gc:#F4C430;">
+    <div class="genre-block-head">
+      <span class="dot"></span><h3>Adventure</h3><span class="count">15 гарчиг</span>
+    </div>
+    <div class="hscroll">
+      <div class="card" style="--c1:#3c5c2c;">
+        <div class="tone"></div>
+        <div class="card-info"><div class="title">ГАЗРЫН ЗҮРХ</div><div class="meta"><span>Анги 52</span></div></div>
+      </div>
+      <div class="card" style="--c1:#6b4a1f;">
+        <div class="tone"></div>
+        <div class="card-badge new">NEW</div>
+        <div class="card-info"><div class="title">МУНХАГ БАТАР</div><div class="meta"><span>Анги 3</span></div></div>
+      </div>
+      <div class="card" style="--c1:#1f6b6b;">
+        <div class="tone"></div>
+        <div class="card-info"><div class="title">ХОЛЫН ЗАМЫН ХҮҮ</div><div class="meta"><span>Анги 30</span></div></div>
       </div>
     </div>
-    <div class="card" style="--c1:#6b1f5e;">
-      <div class="tone"></div>
-      <div class="card-badge new">NEW</div>
-      <div class="card-info">
-        <div class="title">ӨДРИЙН ОДОН</div>
-        <div class="meta"><span>Анги 2</span></div>
+  </div>
+
+  <div class="genre-block" id="genre-romance" style="--gc:#e05c9a;">
+    <div class="genre-block-head">
+      <span class="dot"></span><h3>Romance</h3><span class="count">31 гарчиг</span>
+    </div>
+    <div class="hscroll">
+      <div class="card" style="--c1:#6b1f5e;">
+        <div class="tone"></div>
+        <div class="card-badge new">NEW</div>
+        <div class="card-info"><div class="title">ӨДРИЙН ОДОН</div><div class="meta"><span>Анги 2</span></div></div>
+      </div>
+      <div class="card" style="--c1:#4a3a63;">
+        <div class="tone"></div>
+        <div class="card-badge">#3</div>
+        <div class="card-info"><div class="title">ХАРАНХУЙ ОРДОН</div><div class="meta"><span>Анги 156</span></div></div>
+      </div>
+      <div class="card" style="--c1:#8a2f4a;">
+        <div class="tone"></div>
+        <div class="card-info"><div class="title">ЦАСАН ДОТОРХ ХАЙР</div><div class="meta"><span>Анги 44</span></div></div>
       </div>
     </div>
-    <div class="card" style="--c1:#1f3a6b;">
-      <div class="tone"></div>
-      <div class="card-badge new">NEW</div>
-      <div class="card-info">
-        <div class="title">ХАВРЫН СЭВ</div>
-        <div class="meta"><span>Анги 5</span></div>
+  </div>
+
+  <div class="genre-block" id="genre-fantasy" style="--gc:#8a5cf6;">
+    <div class="genre-block-head">
+      <span class="dot"></span><h3>Fantasy</h3><span class="count">19 гарчиг</span>
+    </div>
+    <div class="hscroll">
+      <div class="card" style="--c1:#233d5c;">
+        <div class="tone"></div>
+        <div class="card-badge">#2</div>
+        <div class="card-info"><div class="title">ЦАГААН ХААНЫ ТУУЖ</div><div class="meta"><span>Анги 89</span></div></div>
+      </div>
+      <div class="card" style="--c1:#1f3a6b;">
+        <div class="tone"></div>
+        <div class="card-badge new">NEW</div>
+        <div class="card-info"><div class="title">ХАВРЫН СЭВ</div><div class="meta"><span>Анги 5</span></div></div>
+      </div>
+      <div class="card" style="--c1:#4a2f63;">
+        <div class="tone"></div>
+        <div class="card-info"><div class="title">СҮҮДЭРТ ХОТ</div><div class="meta"><span>Анги 71</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="genre-block" id="genre-comedy" style="--gc:#4caf50;">
+    <div class="genre-block-head">
+      <span class="dot"></span><h3>Comedy</h3><span class="count">12 гарчиг</span>
+    </div>
+    <div class="hscroll">
+      <div class="card" style="--c1:#2f6b3a;">
+        <div class="tone"></div>
+        <div class="card-info"><div class="title">ХОЁР ДҮҮГИЙН ХӨГЖИЛ</div><div class="meta"><span>Анги 18</span></div></div>
+      </div>
+      <div class="card" style="--c1:#3c5c2c;">
+        <div class="tone"></div>
+        <div class="card-badge new">NEW</div>
+        <div class="card-info"><div class="title">АНГИЙН ТЭНЭГ</div><div class="meta"><span>Анги 6</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="genre-block" id="genre-horror" style="--gc:#8a8a8a;">
+    <div class="genre-block-head">
+      <span class="dot"></span><h3>Horror</h3><span class="count">9 гарчиг</span>
+    </div>
+    <div class="hscroll">
+      <div class="card" style="--c1:#1a1a1a;">
+        <div class="tone"></div>
+        <div class="card-info"><div class="title">ХАРАНХУЙН ДУУДЛАГА</div><div class="meta"><span>Анги 25</span></div></div>
+      </div>
+      <div class="card" style="--c1:#2a2a2a;">
+        <div class="tone"></div>
+        <div class="card-badge new">NEW</div>
+        <div class="card-info"><div class="title">СОНИН ОРДОН</div><div class="meta"><span>Анги 4</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="genre-block" id="genre-drama" style="--gc:#3a7bd5;">
+    <div class="genre-block-head">
+      <span class="dot"></span><h3>Drama</h3><span class="count">21 гарчиг</span>
+    </div>
+    <div class="hscroll">
+      <div class="card" style="--c1:#3c5c2c;">
+        <div class="tone"></div>
+        <div class="card-badge">#4</div>
+        <div class="card-info"><div class="title">ГАЛТ САРНАЙ</div><div class="meta"><span>Анги 40</span></div></div>
+      </div>
+      <div class="card" style="--c1:#1f4a6b;">
+        <div class="tone"></div>
+        <div class="card-info"><div class="title">ХОЁР ДЭЛХИЙН ХООРОНД</div><div class="meta"><span>Анги 33</span></div></div>
       </div>
     </div>
   </div>

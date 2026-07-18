@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ХУУДАС — Манга &amp; Webtoon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#121212;
+    --ink-soft:#1c1c1c;
+    --paper:#EDEAE0;
+    --paper-dim:#cfcbbd;
+    --red:#E8384F;
+    --yellow:#F4C430;
+    --gutter:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Noto Sans', sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,.display{
+    font-family:'Anton', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- Screentone texture ---------- */
+  .tone{
+    background-image:radial-gradient(var(--paper-dim) 1px, transparent 1.4px);
+    background-size:7px 7px;
+    opacity:0.08;
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:var(--ink);
+    border-bottom:4px solid var(--paper);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;
+  }
+  .logo{
+    font-family:'Anton',sans-serif;
+    font-size:1.6rem;
+    color:var(--paper);
+    display:flex;align-items:center;gap:6px;
+  }
+  .logo span{color:var(--red);}
+  nav{display:flex;gap:16px;font-size:0.85rem;font-weight:600;}
+  nav a{opacity:0.75;transition:opacity .2s;}
+  nav a:hover{opacity:1;color:var(--red);}
+  .search-btn{
+    width:36px;height:36px;border:2px solid var(--paper);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:0.9rem;
+    flex-shrink:0;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:56px 20px 44px;
+    background:
+      repeating-linear-gradient(115deg, rgba(232,56,79,0.12) 0 2px, transparent 2px 26px),
+      var(--ink);
+    border-bottom:var(--gutter) solid var(--ink);
+    overflow:hidden;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--red);color:var(--ink);
+    font-weight:800;font-size:0.72rem;letter-spacing:1px;
+    padding:5px 10px;transform:skew(-8deg);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:2.6rem;line-height:1.02;
+    color:var(--paper);
+    text-shadow:4px 4px 0 var(--red);
+    max-width:11ch;
+  }
+  .hero p{
+    margin-top:18px;
+    font-size:0.95rem;
+    color:var(--paper-dim);
+    max-width:34ch;
+    line-height:1.5;
+  }
+  .cta-row{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;}
+  .btn{
+    font-weight:800;font-size:0.85rem;
+    padding:13px 22px;
+    border:3px solid var(--paper);
+    display:inline-block;
+  }
+  .btn-solid{background:var(--paper);color:var(--ink);}
+  .btn-outline{background:transparent;color:var(--paper);}
+
+  /* ---------- Section shell ---------- */
+  section{padding:34px 18px;}
+  .section-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:16px;
+    border-bottom:3px solid var(--paper);
+    padding-bottom:8px;
+  }
+  .section-head h2{font-size:1.3rem;}
+  .section-head .tag{
+    font-size:0.7rem;color:var(--red);font-weight:800;letter-spacing:1px;
+  }
+  .see-all{font-size:0.75rem;font-weight:600;color:var(--paper-dim);}
+
+  /* ---------- Panel grid (signature) ---------- */
+  .panel-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:var(--gutter);
+    background:var(--ink);
+  }
+  .card{
+    position:relative;
+    aspect-ratio:3/4.2;
+    background:var(--c1, #333);
+    border:3px solid var(--ink);
+    overflow:hidden;
+    display:flex;flex-direction:column;justify-content:flex-end;
+  }
+  .card .tone{opacity:0.14;}
+  .card-badge{
+    position:absolute;top:8px;left:8px;
+    background:var(--yellow);color:var(--ink);
+    font-size:0.62rem;font-weight:800;
+    padding:3px 7px;transform:skew(-8deg);
+    z-index:2;
+  }
+  .card-badge.new{background:var(--red);color:var(--paper);}
+  .card-info{
+    position:relative;z-index:2;
+    padding:10px;
+    background:linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  }
+  .card-info .title{
+    font-family:'Anton',sans-serif;
+    font-size:0.95rem;line-height:1.05;
+    text-shadow:1px 1px 0 rgba(0,0,0,0.6);
+  }
+  .card-info .meta{
+    font-size:0.65rem;color:var(--paper-dim);
+    margin-top:3px;display:flex;gap:8px;
+  }
+
+  /* ---------- Genre chips ---------- */
+  .chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip{
+    border:2px solid var(--paper-dim);
+    padding:7px 13px;font-size:0.75rem;font-weight:600;
+    color:var(--paper-dim);
+  }
+  .chip.active{background:var(--red);border-color:var(--red);color:var(--paper);}
+
+  /* ---------- Horizontal scroller ---------- */
+  .hscroll{
+    display:flex;gap:var(--gutter);overflow-x:auto;
+    padding-bottom:6px;
+    scrollbar-width:none;
+  }
+  .hscroll::-webkit-scrollbar{display:none;}
+  .hscroll .card{min-width:130px;flex:0 0 auto;aspect-ratio:3/4.4;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:30px 18px 40px;
+    border-top:4px solid var(--paper);
+    text-align:center;
+  }
+  footer .logo{justify-content:center;margin-bottom:10px;}
+  footer p{font-size:0.72rem;color:var(--paper-dim);}
+
+  /* ---------- Responsive ---------- */
+  @media(min-width:640px){
+    .hero h1{font-size:3.6rem;max-width:14ch;}
+    .panel-grid{grid-template-columns:repeat(4,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">頁<span>|</span>ХУУДАС</div>
+  <nav>
+    <a href="#trending">Нүүр</a>
+    <a href="#trending">Манга</a>
+    <a href="#new">Webtoon</a>
+  </nav>
+  <div class="search-btn">⌕</div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">● одоо унших боломжтой</div>
+  <h1>ӨДӨР БҮР<br>ШИНЭ АНГИ</h1>
+  <p>Дуртай манга, webtoon-оо нэг дороос уншаарай. Шинэ ангиуд өдөр бүр нэмэгдэнэ, dogo unshihgүй үлдэхгүй.</p>
+  <div class="cta-row">
+    <a class="btn btn-solid" href="#trending">Унших эхлэх</a>
+    <a class="btn btn-outline" href="#new">Шинэ ангиуд</a>
+  </div>
+</section>
+
+<section id="trending">
+  <div class="section-head">
+    <h2>Trending</h2>
+    <span class="tag">7 ХОНОГИЙН ТОП</span>
+  </div>
+  <div class="panel-grid">
+    <div class="card" style="--c1:#7a1f2b;">
+      <div class="tone"></div>
+      <div class="card-badge">#1</div>
+      <div class="card-info">
+        <div class="title">СҮНСНИЙ ЗАМ</div>
+        <div class="meta"><span>Англи 214</span><span>Action</span></div>
+      </div>
+    </div>
+    <div class="card" style="--c1:#233d5c;">
+      <div class="tone"></div>
+      <div class="card-badge">#2</div>
+      <div class="card-info">
+        <div class="title">ЦАГААН ХААНЫ ТУУЖ</div>
+        <div class="meta"><span>Англи 89</span><span>Fantasy</span></div>
+      </div>
+    </div>
+    <div class="card" style="--c1:#4a3a63;">
+      <div class="tone"></div>
+      <div class="card-badge">#3</div>
+      <div class="card-info">
+        <div class="title">ХАРАНХУЙ ОРДОН</div>
+        <div class="meta"><span>Англи 156</span><span>Romance</span></div>
+      </div>
+    </div>
+    <div class="card" style="--c1:#3c5c2c;">
+      <div class="tone"></div>
+      <div class="card-badge">#4</div>
+      <div class="card-info">
+        <div class="title">ГАЛТ САРНАЙ</div>
+        <div class="meta"><span>Англи 40</span><span>Drama</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>Төрөл</h2>
+  </div>
+  <div class="chips">
+    <a class="chip active" href="#">Бүгд</a>
+    <a class="chip" href="#">Action</a>
+    <a class="chip" href="#">Romance</a>
+    <a class="chip" href="#">Fantasy</a>
+    <a class="chip" href="#">Horror</a>
+    <a class="chip" href="#">Comedy</a>
+    <a class="chip" href="#">Drama</a>
+  </div>
+</section>
+
+<section id="new">
+  <div class="section-head">
+    <h2>Шинээр нэмэгдсэн</h2>
+    <span class="see-all">бүгдийг харах →</span>
+  </div>
+  <div class="hscroll">
+    <div class="card" style="--c1:#8a4b1f;">
+      <div class="tone"></div>
+      <div class="card-badge new">NEW</div>
+      <div class="card-info">
+        <div class="title">ШӨНИЙН ЗЭРЭГЦЭЭ</div>
+        <div class="meta"><span>Анги 1</span></div>
+      </div>
+    </div>
+    <div class="card" style="--c1:#1f6b6b;">
+      <div class="tone"></div>
+      <div class="card-badge new">NEW</div>
+      <div class="card-info">
+        <div class="title">МУНХАГ БАТАР</div>
+        <div class="meta"><span>Анги 3</span></div>
+      </div>
+    </div>
+    <div class="card" style="--c1:#6b1f5e;">
+      <div class="tone"></div>
+      <div class="card-badge new">NEW</div>
+      <div class="card-info">
+        <div class="title">ӨДРИЙН ОДОН</div>
+        <div class="meta"><span>Анги 2</span></div>
+      </div>
+    </div>
+    <div class="card" style="--c1:#1f3a6b;">
+      <div class="tone"></div>
+      <div class="card-badge new">NEW</div>
+      <div class="card-info">
+        <div class="title">ХАВРЫН СЭВ</div>
+        <div class="meta"><span>Анги 5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">頁<span>|</span>ХУУДАС</div>
+  <p>© 2026 ХУУДАС — Манга &amp; Webtoon уншлагын платформ</p>
+</footer>
+
+</body>
+</html>
